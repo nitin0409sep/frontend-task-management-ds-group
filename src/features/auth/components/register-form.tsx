@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../config/routes';
+import { getApiErrorMessage } from '../../../lib/api-error-message';
 import { zodResolver } from '../../../lib/zod-resolver';
 import { useRegisterMutation } from '../api/auth-queries';
 import { registerFormSchema } from '../validation/auth-schema';
@@ -18,6 +19,7 @@ export const RegisterForm = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const registerUser = useRegisterMutation();
+  const registerErrorMessage = registerUser.isError ? getApiErrorMessage(registerUser.error, 'Could not create the account') : undefined;
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -34,14 +36,14 @@ export const RegisterForm = () => {
       auth.setSession(response);
       toast.success('Account created');
       navigate(routes.dashboard);
-    } catch {
-      toast.error('Could not create the account');
+    } catch (error) {
+      toast.error(getApiErrorMessage(error, 'Could not create the account'));
     }
   };
 
   return (
     <Stack component="form" spacing={2.5} onSubmit={handleSubmit(onSubmit)} noValidate>
-      {registerUser.isError && <Alert severity="error">Could not create the account</Alert>}
+      {registerErrorMessage && <Alert severity="error">{registerErrorMessage}</Alert>}
       <TextField
         label="Name"
         required
