@@ -26,7 +26,9 @@ export const DashboardPage = () => {
   const updateStatus = useUpdateTaskStatusMutation();
   const isAdmin = user?.role === 'admin';
   const taskList = useMemo(() => tasks.data?.pages.flatMap((page) => page.tasks) ?? [], [tasks.data]);
+  const hasActiveFilters = Boolean(filters.search || filters.status || filters.priority || filters.sortBy || filters.sortOrder !== 'desc');
 
+  const clearFilters = useCallback(() => setFilters({ sortOrder: 'desc' }), []);
   const goToNewTask = useCallback(() => navigate(routes.newTask), [navigate]);
   const viewTask = useCallback((task: Task) => navigate(routes.viewTask(task.id)), [navigate]);
   const editTask = useCallback((task: Task) => {
@@ -88,11 +90,21 @@ export const DashboardPage = () => {
               <FilterList color="action" fontSize="small" />
               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>Filters</Typography>
             </Stack>
-            {isAdmin && (
-              <Button startIcon={<Add />} variant="contained" onClick={goToNewTask} sx={{ alignSelf: { xs: 'stretch', sm: 'center' } }}>
-                New task
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ alignSelf: { xs: 'stretch', sm: 'center' } }}>
+              <Button
+                variant="text"
+                onClick={clearFilters}
+                disabled={!hasActiveFilters}
+                sx={{ display: { xs: 'none', md: 'inline-flex' }, minWidth: 0, px: 1 }}
+              >
+                Reset
               </Button>
-            )}
+              {isAdmin && (
+                <Button startIcon={<Add />} variant="contained" onClick={goToNewTask} sx={{ alignSelf: { xs: 'stretch', sm: 'center' } }}>
+                  New task
+                </Button>
+              )}
+            </Stack>
           </Stack>
           <TaskFiltersBar filters={filters} onChange={setFilters} />
         </Stack>

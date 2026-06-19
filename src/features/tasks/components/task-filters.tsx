@@ -22,8 +22,8 @@ const FilterFields = ({ filters, onChange }: TaskFiltersBarProps) => (
       <MenuItem value="medium">Medium</MenuItem>
       <MenuItem value="high">High</MenuItem>
     </TextField>
-    <TextField select label="Sort by" value={filters.sortBy ?? ''} onChange={(event) => onChange({ ...filters, sortBy: event.target.value as TaskFilters['sortBy'] })}>
-      <MenuItem value="">Created date</MenuItem>
+    <TextField select label="Sort by" value={filters.sortBy ?? 'createdAt'} onChange={(event) => onChange({ ...filters, sortBy: event.target.value as TaskFilters['sortBy'] })}>
+      <MenuItem value="createdAt">Created date</MenuItem>
       <MenuItem value="priority">Priority</MenuItem>
       <MenuItem value="dueDate">Due date</MenuItem>
     </TextField>
