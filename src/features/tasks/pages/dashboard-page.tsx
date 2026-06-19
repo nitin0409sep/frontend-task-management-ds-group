@@ -121,7 +121,7 @@ export const DashboardPage = () => {
               <TaskCardList tasks={taskList} canManage={isAdmin} onView={viewTask} onEdit={editTask} onDelete={setTaskToDelete} />
             </>
           )}
-          {(tasks.isFetchingNextPage || (tasks.isFetching && !tasks.isLoading)) && (
+          {tasks.isFetchingNextPage && (
             <Stack direction="row" spacing={1} sx={{ alignItems: 'center', justifyContent: 'center', color: 'text.secondary', py: 1 }}>
               <CircularProgress size={18} />
               <Typography variant="body2">Loading tasks</Typography>
