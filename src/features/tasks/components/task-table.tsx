@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Delete, Edit, Visibility } from '@mui/icons-material';
-import { Box, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { PriorityChip } from '../../../components/ui/priority-chip';
 import { StatusChip } from '../../../components/ui/status-chip';
 import type { Task } from '../../../types/task';
@@ -32,19 +32,15 @@ export const TaskTable = memo(function TaskTable({ tasks, canManage, onView, onE
             <TableRow key={task.id} hover>
               <TableCell sx={{ width: 360, maxWidth: 360 }}>
                 <Box sx={{ minWidth: 0 }}>
-                  <Tooltip title={task.title} placement="top-start">
-                    <Typography noWrap sx={{ fontWeight: 700 }}>{task.title}</Typography>
-                  </Tooltip>
+                  <Typography noWrap sx={{ fontWeight: 700 }}>{task.title}</Typography>
                   {task.description && (
-                    <Tooltip title={task.description} placement="top-start">
-                      <Typography variant="body2" color="text.secondary" noWrap>{task.description}</Typography>
-                    </Tooltip>
+                    <Typography variant="body2" color="text.secondary" noWrap>{task.description}</Typography>
                   )}
                 </Box>
               </TableCell>
               <TableCell><StatusChip status={task.status} /></TableCell>
               <TableCell><PriorityChip priority={task.priority} /></TableCell>
-              <TableCell sx={{ maxWidth: 180 }}><Tooltip title={task.assigneeName ?? '-'}><Typography noWrap>{task.assigneeName ?? '-'}</Typography></Tooltip></TableCell>
+              <TableCell sx={{ maxWidth: 180 }}><Typography noWrap>{task.assigneeName ?? '-'}</Typography></TableCell>
               <TableCell>{task.dueDate ? new Date(task.dueDate).toLocaleDateString() : '-'}</TableCell>
               <TableCell align="right">
                 <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>

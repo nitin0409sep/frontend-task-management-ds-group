@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Delete, Edit, Visibility } from '@mui/icons-material';
-import { Card, CardContent, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Card, CardContent, IconButton, Stack, Typography } from '@mui/material';
 import { PriorityChip } from '../../../components/ui/priority-chip';
 import { StatusChip } from '../../../components/ui/status-chip';
 import type { Task } from '../../../types/task';
@@ -21,14 +21,14 @@ export const TaskCardList = memo(function TaskCardList({ tasks, canManage, onVie
           <CardContent>
             <Stack spacing={1.5}>
               <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }} spacing={1}>
-                <Tooltip title={task.title} placement="top-start"><Typography noWrap sx={{ fontWeight: 800, pr: 1, minWidth: 0 }}>{task.title}</Typography></Tooltip>
+                <Typography noWrap sx={{ fontWeight: 800, pr: 1, minWidth: 0 }}>{task.title}</Typography>
                 <Stack direction="row">
                   <IconButton size="small" onClick={() => onView(task)} aria-label="View task"><Visibility fontSize="small" /></IconButton>
                   <IconButton size="small" onClick={() => onEdit(task)} aria-label={canManage ? 'Edit task' : 'Update status'}><Edit fontSize="small" /></IconButton>
                   {canManage && <IconButton size="small" color="error" onClick={() => onDelete(task)} aria-label="Delete task"><Delete fontSize="small" /></IconButton>}
                 </Stack>
               </Stack>
-              {task.description && <Tooltip title={task.description} placement="top-start"><Typography noWrap color="text.secondary">{task.description}</Typography></Tooltip>}
+              {task.description && <Typography noWrap color="text.secondary">{task.description}</Typography>}
               <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', rowGap: 1 }}>
                 <StatusChip status={task.status} />
                 <PriorityChip priority={task.priority} />
